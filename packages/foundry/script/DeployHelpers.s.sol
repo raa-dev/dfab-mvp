@@ -32,6 +32,13 @@ contract ScaffoldETHDeploy is Script {
         }
     }
 
+    function setupLocalhostEnvUri()
+        internal
+        returns (string memory uri)
+    {
+        return vm.envUint("NEXT_PUBLIC_GATEWAY_URL");
+    }
+
     function exportDeployments() internal {
         // fetch already existing contracts
         root = vm.projectRoot();
