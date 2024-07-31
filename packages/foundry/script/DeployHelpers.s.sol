@@ -36,7 +36,7 @@ contract ScaffoldETHDeploy is Script {
         internal
         returns (string memory uri)
     {
-        return vm.envUint("NEXT_PUBLIC_GATEWAY_URL");
+        return vm.envString("NEXT_PUBLIC_GATEWAY_URL");
     }
 
     function exportDeployments() internal {

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 
 import "../contracts/DePhilContract.sol";
-import "../contracts/PublicationContract.sol";
+import "../contracts/DePhilPublicationContract.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -19,8 +19,8 @@ contract DeployScript is ScaffoldETHDeploy {
 
         string memory uri = setupLocalhostEnvUri();
 
-        PublicationContract publication =
-            new PublicationContract(uri, vm.addr(deployerPrivateKey));
+        DePhilPublicationContract publication =
+            new DePhilPublicationContract(vm.addr(deployerPrivateKey), uri);
         console.logString(
             string.concat(
                 "Publication deployed at: ", vm.toString(address(publication))
