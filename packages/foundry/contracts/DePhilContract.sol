@@ -3,9 +3,23 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+/**
+ * @author raa
+ */
+
 interface IPublication {
-    function mint(address account, uint256 id, uint256 amount, bytes memory data) external;
-    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) external;
+    function mint(
+        address account,
+        uint256 id,
+        uint256 amount,
+        bytes memory data
+    ) external;
+    function mintBatch(
+        address to,
+        uint256[] memory ids,
+        uint256[] memory amounts,
+        bytes memory data
+    ) external;
 }
 
 contract DePhilContract is Ownable {
@@ -27,9 +41,9 @@ contract DePhilContract is Ownable {
         address author;
         uint256 cost;
         uint256 upVotes;
-        int256 downVotes;
+        uint256 downVotes;
         uint256 commentsCount;
-        string tags;
+        string[] tags;
         uint256 createdAt;
         uint256 quantity;
     }
@@ -38,32 +52,55 @@ contract DePhilContract is Ownable {
         string bio;
         string username;
         address payable owner;
-        mapping(address => bool) following;
-        mapping(address => bool) followers;
+        address[] following;
+        address[] followers;
         mapping(uint256 => Publication) publications;
+        uint256[] publicationIds;
     }
 
-    mapping(uint256 => mapping(uint256 => Comment)) public comments;
-    mapping(uint256 => Publication) public publications;
+    mapping(uint256 => mapping(uint256 => Comment)) internal comments;
+    mapping(uint256 => Publication) internal publications;
     mapping(address => uint256) public userPoints;
     mapping(address => Profile) private profiles;
 
-    constructor(address _owner, address _publicationContractAddress) Ownable(_owner) {
+    constructor(
+        address _owner,
+        address _publicationContractAddress
+    ) Ownable(_owner) {
         publicationContractAddress = _publicationContractAddress;
         transferOwnership(_owner);
     }
 
-    event PublicationCreated(uint256 indexed id, string title, address indexed author, uint256 quantity);
-    event PublicationUpdated(uint256 indexed id, string title, address indexed author);
-    event PublicationVoted(uint256 indexed id, address indexed voter, string typeofvote);
+    event PublicationCreated(
+        uint256 indexed id,
+        string title,
+        address indexed author,
+        uint256 quantity
+    );
+    event PublicationUpdated(
+        uint256 indexed id,
+        string title,
+        address indexed author
+    );
+    event PublicationVoted(
+        uint256 indexed id,
+        address indexed voter,
+        string typeofvote
+    );
 
     modifier onlyAuthor(uint256 publicationId) {
-        require(publications[publicationId].author == msg.sender, "Only the author can perform this action");
+        require(
+            publications[publicationId].author == msg.sender,
+            "Only the author can perform this action"
+        );
         _;
     }
 
     modifier notZeroAddress(address _address) {
-        require(_address != address(0), "Invalid Address: address cannot be 0x0");
+        require(
+            _address != address(0),
+            "Invalid Address: address cannot be 0x0"
+        );
         _;
     }
 
@@ -74,14 +111,51 @@ contract DePhilContract is Ownable {
 
     receive() external payable {}
 
-    function follow(address _address) public notZeroAddress(msg.sender) notZeroAddress(_address) {
-        profiles[msg.sender].following[_address] = true;
-        profiles[_address].followers[msg.sender] = true;
+    function follow(
+        address _address
+    ) public notZeroAddress(msg.sender) notZeroAddress(_address) {
+        Profile storage senderProfile = profiles[msg.sender];
+        Profile storage receiverProfile = profiles[_address];
+
+        bool isFollowing = false;
+        for (uint256 i = 0; i < senderProfile.following.length; i++) {
+            if (senderProfile.following[i] == _address) {
+                isFollowing = true;
+                break;
+            }
+        }
+
+        if (!isFollowing) {
+            senderProfile.following.push(_address);
+            receiverProfile.followers.push(msg.sender);
+        }
     }
 
-    function unfollow(address _address) public notZeroAddress(msg.sender) notZeroAddress(_address) {
-        profiles[msg.sender].following[_address] = false;
-        profiles[_address].followers[msg.sender] = false;
+    function unfollow(
+        address _address
+    ) public notZeroAddress(msg.sender) notZeroAddress(_address) {
+        Profile storage senderProfile = profiles[msg.sender];
+        Profile storage receiverProfile = profiles[_address];
+
+        for (uint256 i = 0; i < senderProfile.following.length; i++) {
+            if (senderProfile.following[i] == _address) {
+                senderProfile.following[i] = senderProfile.following[
+                    senderProfile.following.length - 1
+                ];
+                senderProfile.following.pop();
+                break;
+            }
+        }
+
+        for (uint256 i = 0; i < receiverProfile.followers.length; i++) {
+            if (receiverProfile.followers[i] == msg.sender) {
+                receiverProfile.followers[i] = receiverProfile.followers[
+                    receiverProfile.followers.length - 1
+                ];
+                receiverProfile.followers.pop();
+                break;
+            }
+        }
     }
 
     function createPublication(
@@ -89,7 +163,7 @@ contract DePhilContract is Ownable {
         string memory title,
         string memory summary,
         uint256 cost,
-        string memory tags,
+        string[] memory tags,
         uint256 quantity
     ) external {
         uint256 newPublicationId = nextPublicationId++;
@@ -109,7 +183,14 @@ contract DePhilContract is Ownable {
         });
 
         publications[newPublicationId] = newPublication;
-        IPublication(publicationContractAddress).mint(msg.sender, newPublicationId, quantity, "");
+        profiles[msg.sender].publications[newPublicationId] = newPublication;
+        profiles[msg.sender].publicationIds.push(newPublicationId);
+        IPublication(publicationContractAddress).mint(
+            msg.sender,
+            newPublicationId,
+            quantity,
+            ""
+        );
 
         emit PublicationCreated(newPublicationId, title, msg.sender, quantity);
     }
@@ -120,30 +201,44 @@ contract DePhilContract is Ownable {
         string memory title,
         string memory summary,
         uint256 cost,
-        string memory tags
+        string[] memory tags
     ) external onlyAuthor(publicationId) {
         Publication storage publication = publications[publicationId];
-        publication.uri = uri;
-        publication.title = title;
-        publication.summary = summary;
-        publication.cost = cost;
-        publication.tags = tags;
+        
+        if (bytes(uri).length > 0) {
+            publication.uri = uri;
+        }
+        if (bytes(title).length > 0) {
+            publication.title = title;
+        }
+        if (bytes(summary).length > 0) {
+            publication.summary = summary;
+        }
+        if (cost > 0) {
+            publication.cost = cost;
+        }
+        if (tags.length > 0) {
+            publication.tags = tags;
+        }
 
         emit PublicationUpdated(publicationId, title, msg.sender);
     }
 
-    function getPublication(uint256 publicationId) external view returns (Publication memory) {
+    function getPublication(
+        uint256 publicationId
+    ) external view returns (Publication memory) {
         return publications[publicationId];
     }
 
     function upvotePublication(uint256 publicationId) external {
         publications[publicationId].upVotes += 1;
+        userPoints[publications[publicationId].author] += 1;
         emit PublicationVoted(publicationId, msg.sender, "upvote");
     }
 
     function downvotePublication(uint256 publicationId) external {
-        require(publications[publicationId].downVotes > 0, "Down vote cannot be positive");
-        publications[publicationId].downVotes -= 1;
+        publications[publicationId].downVotes += 1;
+        userPoints[publications[publicationId].author] += 1;
         emit PublicationVoted(publicationId, msg.sender, "downvote");
     }
 
@@ -158,14 +253,12 @@ contract DePhilContract is Ownable {
         });
     }
 
-    function getComments(uint256 publicationId)
+    function getComments(
+        uint256 publicationId
+    )
         public
         view
-        returns (
-            address[] memory,
-            string[] memory,
-            uint256[] memory
-        )
+        returns (address[] memory, string[] memory, uint256[] memory)
     {
         uint256 commentsCount = publications[publicationId].commentsCount;
         address[] memory authors = new address[](commentsCount);
@@ -182,15 +275,57 @@ contract DePhilContract is Ownable {
         return (authors, contents, createdAts);
     }
 
-    function getProfile(address _address) public view returns (string memory, string memory, address) {
-        Profile storage profile = profiles[_address];
-        return (profile.bio, profile.username, profile.owner);
+    function addProfile(string memory _bio, string memory _username) public {
+        profiles[msg.sender].bio = _bio;
+        profiles[msg.sender].username = _username;
+        profiles[msg.sender].owner = payable(msg.sender);
     }
 
-    function addProfile(string memory _bio, string memory _username) public {
-        Profile storage profile = profiles[msg.sender];
-        profile.bio = _bio;
-        profile.username = _username;
-        profile.owner = payable(msg.sender);
+    function getProfile(
+        address _address
+    )
+        public
+        view
+        returns (
+            string memory,
+            string memory,
+            address,
+            address[] memory,
+            address[] memory,
+            uint256[] memory,
+            uint256
+        )
+    {
+        Profile storage profile = profiles[_address];
+
+        address[] memory following = new address[](profile.following.length);
+        address[] memory followers = new address[](profile.followers.length);
+
+        for (uint256 i = 0; i < profile.following.length; i++) {
+            following[i] = profile.following[i];
+        }
+
+        for (uint256 i = 0; i < profile.followers.length; i++) {
+            followers[i] = profile.followers[i];
+        }
+
+        uint256[] memory publicationIds = new uint256[](
+            profile.publicationIds.length
+        );
+        for (uint256 i = 0; i < profile.publicationIds.length; i++) {
+            publicationIds[i] = profile.publicationIds[i];
+        }
+
+        uint256 points = userPoints[_address];
+
+        return (
+            profile.bio,
+            profile.username,
+            profile.owner,
+            following,
+            followers,
+            publicationIds,
+            points
+        );
     }
 }

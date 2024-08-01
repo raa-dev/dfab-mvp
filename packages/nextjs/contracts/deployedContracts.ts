@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     DePhilPublicationContract: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
       abi: [
         {
           type: "constructor",
@@ -586,7 +586,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     DePhilContract: {
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
       abi: [
         {
           type: "constructor",
@@ -646,45 +646,6 @@ const deployedContracts = {
         },
         {
           type: "function",
-          name: "comments",
-          inputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          outputs: [
-            {
-              name: "id",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "author",
-              type: "address",
-              internalType: "address",
-            },
-            {
-              name: "content",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "createdAt",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
           name: "createPublication",
           inputs: [
             {
@@ -709,8 +670,8 @@ const deployedContracts = {
             },
             {
               name: "tags",
-              type: "string",
-              internalType: "string",
+              type: "string[]",
+              internalType: "string[]",
             },
             {
               name: "quantity",
@@ -802,6 +763,26 @@ const deployedContracts = {
               type: "address",
               internalType: "address",
             },
+            {
+              name: "",
+              type: "address[]",
+              internalType: "address[]",
+            },
+            {
+              name: "",
+              type: "address[]",
+              internalType: "address[]",
+            },
+            {
+              name: "",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
           ],
           stateMutability: "view",
         },
@@ -858,8 +839,8 @@ const deployedContracts = {
                 },
                 {
                   name: "downVotes",
-                  type: "int256",
-                  internalType: "int256",
+                  type: "uint256",
+                  internalType: "uint256",
                 },
                 {
                   name: "commentsCount",
@@ -868,8 +849,8 @@ const deployedContracts = {
                 },
                 {
                   name: "tags",
-                  type: "string",
-                  internalType: "string",
+                  type: "string[]",
+                  internalType: "string[]",
                 },
                 {
                   name: "createdAt",
@@ -921,80 +902,6 @@ const deployedContracts = {
               name: "",
               type: "address",
               internalType: "address",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "publications",
-          inputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          outputs: [
-            {
-              name: "uri",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "id",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "title",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "summary",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "author",
-              type: "address",
-              internalType: "address",
-            },
-            {
-              name: "cost",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "upVotes",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "downVotes",
-              type: "int256",
-              internalType: "int256",
-            },
-            {
-              name: "commentsCount",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "tags",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "createdAt",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "quantity",
-              type: "uint256",
-              internalType: "uint256",
             },
           ],
           stateMutability: "view",
@@ -1063,8 +970,8 @@ const deployedContracts = {
             },
             {
               name: "tags",
-              type: "string",
-              internalType: "string",
+              type: "string[]",
+              internalType: "string[]",
             },
           ],
           outputs: [],

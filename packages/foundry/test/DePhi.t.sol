@@ -15,7 +15,11 @@ contract DePhilTest is Test {
     }
 
     function testCreatePublication() public {
-        dePhil.createPublication("uri", "title", "description", 1, "tag1", 1);
+        string[] memory tags = new string[](2);
+        for (uint256 i = 0; i < tags.length; i++) {
+            tags[i] = "tag";
+        }
+        dePhil.createPublication("uri", "title", "description", 1, tags, 1);
 
     }
 }
