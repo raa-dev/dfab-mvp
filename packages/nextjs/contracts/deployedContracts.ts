@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     DePhilPublicationContract: {
-      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
       abi: [
         {
           type: "constructor",
@@ -586,7 +586,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     DePhilContract: {
-      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
       abi: [
         {
           type: "constructor",
@@ -750,38 +750,107 @@ const deployedContracts = {
           outputs: [
             {
               name: "",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "",
-              type: "string",
-              internalType: "string",
-            },
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-            {
-              name: "",
-              type: "address[]",
-              internalType: "address[]",
-            },
-            {
-              name: "",
-              type: "address[]",
-              internalType: "address[]",
-            },
-            {
-              name: "",
-              type: "uint256[]",
-              internalType: "uint256[]",
-            },
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
+              type: "tuple",
+              internalType: "struct DePhilContract.Profile",
+              components: [
+                {
+                  name: "bio",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "username",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "owner",
+                  type: "address",
+                  internalType: "address payable",
+                },
+                {
+                  name: "following",
+                  type: "address[]",
+                  internalType: "address[]",
+                },
+                {
+                  name: "followers",
+                  type: "address[]",
+                  internalType: "address[]",
+                },
+                {
+                  name: "publications",
+                  type: "tuple[]",
+                  internalType: "struct DePhilContract.Publication[]",
+                  components: [
+                    {
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "title",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "summary",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "upVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "downVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "commentsCount",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "tags",
+                      type: "string[]",
+                      internalType: "string[]",
+                    },
+                    {
+                      name: "createdAt",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "quantity",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+                {
+                  name: "publicationIds",
+                  type: "uint256[]",
+                  internalType: "uint256[]",
+                },
+              ],
             },
           ],
           stateMutability: "view",

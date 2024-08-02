@@ -37,7 +37,7 @@ export const wagmiConnectors = connectorsForWallets(
   ],
 
   {
-    appName: "DFAB1-MVP",
+    appName: "DePhil-MVP",
     projectId: scaffoldConfig.walletConnectProjectId,
   },
 );
