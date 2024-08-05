@@ -1,7 +1,8 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "../contracts/YourContract.sol";
+import "../contracts/DePhilContract.sol";
+import "../contracts/DePhilPublicationContract.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -16,11 +17,21 @@ contract DeployScript is ScaffoldETHDeploy {
         }
         vm.startBroadcast(deployerPrivateKey);
 
-        YourContract yourContract =
-            new YourContract(vm.addr(deployerPrivateKey));
+        string memory uri = setupLocalhostEnvUri();
+
+        DePhilPublicationContract publication =
+            new DePhilPublicationContract(vm.addr(deployerPrivateKey), uri);
         console.logString(
             string.concat(
-                "YourContract deployed at: ", vm.toString(address(yourContract))
+                "Publication deployed at: ", vm.toString(address(publication))
+            )
+        );
+
+        DePhilContract dePhil =
+            new DePhilContract(vm.addr(deployerPrivateKey), address(publication));
+        console.logString(
+            string.concat(
+                "DePhil deployed at: ", vm.toString(address(dePhil))
             )
         );
 
