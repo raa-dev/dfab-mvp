@@ -12,6 +12,7 @@ export default function FeedLayout({ posts, isLoading }: IGridLayoutProps) {
   const rows = Math.ceil(posts?.length / 5);
   const columns = Math.min(posts?.length, 5);
 
+  console.log(posts);
   return (
     <>
       {isLoading && <SkeletonText />}

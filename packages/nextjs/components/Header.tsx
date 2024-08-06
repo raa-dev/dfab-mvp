@@ -25,7 +25,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="#e1e3eb">
+    <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="#e1e3eb" w="100vw">
       <Flex align="center" mr={5}>
         <Link href="/" passHref>
           <Flex align="center">

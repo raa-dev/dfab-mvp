@@ -55,6 +55,7 @@ contract DePhilContract is Ownable {
         address[] following;
         address[] followers;
         Publication[] publications;
+        Publication[] minted;
         uint256[] publicationIds;
     }
 
