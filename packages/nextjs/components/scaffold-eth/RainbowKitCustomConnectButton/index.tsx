@@ -11,7 +11,7 @@ import { useAtom } from "jotai";
 import { Address } from "viem";
 import { useNetworkColor } from "~~/hooks/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
-import { accountDisplayNameAtom } from "~~/services/state";
+import { accountAddressAtom, accountDisplayNameAtom } from "~~/services/state";
 import { getBlockExplorerAddressLink } from "~~/utils/scaffold-eth";
 
 /**
@@ -21,6 +21,7 @@ export const RainbowKitCustomConnectButton = () => {
   const networkColor = useNetworkColor();
   const { targetNetwork } = useTargetNetwork();
   const [, setAccountDisplayName] = useAtom(accountDisplayNameAtom);
+  const [, setAccountAddress] = useAtom(accountAddressAtom);
 
   return (
     <ConnectButton.Custom>
@@ -32,6 +33,7 @@ export const RainbowKitCustomConnectButton = () => {
 
         if (connected && account.displayName) {
           setAccountDisplayName(account.displayName);
+          setAccountAddress(account.address as Address);
         }
 
         return (

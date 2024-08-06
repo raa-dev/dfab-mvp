@@ -1,11 +1,9 @@
 import PostCard from "../PostCard";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { IPublicationTabs } from "~~/types/dePhil";
 
-export default function TabLayout({ posted }: { posted: any[] }) {
-
-    console.log(posted);
-
-    return (
+export default function ProfileTabLayout({ main, secondary }: IPublicationTabs) {
+  return (
     <Tabs isFitted colorScheme="orange">
       <TabList fontWeight="bold" fontSize="28">
         <Tab>Published</Tab>
@@ -13,13 +11,19 @@ export default function TabLayout({ posted }: { posted: any[] }) {
       </TabList>
       <TabPanels>
         <TabPanel>
-          {posted?.map((post, index) => (
+          {main?.map((post, index) => (
             <div key={index} className="py-[16px] shadow-2xl rounded-[10px]">
-                <PostCard data={post} />
+              <PostCard data={post} />
             </div>
           ))}
         </TabPanel>
-        <TabPanel></TabPanel>
+        <TabPanel>
+          {secondary?.map((post, index) => (
+            <div key={index} className="py-[16px] shadow-2xl rounded-[10px]">
+              <PostCard data={post} />
+            </div>
+          ))}
+        </TabPanel>
       </TabPanels>
     </Tabs>
   );

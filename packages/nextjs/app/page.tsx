@@ -1,13 +1,16 @@
 "use client";
 
+import { useAtom } from "jotai";
 import type { NextPage } from "next";
 import FeedLayout from "~~/components/GridLayout";
 import { useReadDePhilContractHooks } from "~~/hooks/useDePhilContract";
+import { accountAddressAtom } from "~~/services/state";
 import { IProfile } from "~~/types/dePhil";
 
 const Home: NextPage = () => {
+  const accountAddress = useAtom(accountAddressAtom);
   const { useGetProfile } = useReadDePhilContractHooks();
-  const { data: user, isLoading } = useGetProfile("0x5A9FfdC00aEf7AbA7dddc573403Ede4F3870d5f8");
+  const { data: user, isLoading } = useGetProfile(accountAddress[0] ?? "");
 
   const postList = (user as IProfile)?.publications;
 

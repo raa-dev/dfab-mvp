@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { FaEdit } from "react-icons/fa";
-import TabLayout from "~~/components/TabLayout";
+import { ProfileTabLayout } from "~~/components/TabLayout";
 import { useReadDePhilContractHooks } from "~~/hooks/useDePhilContract";
 import { accountDisplayNameAtom } from "~~/services/state";
 import { IProfile, IPublication } from "~~/types/dePhil";
@@ -141,7 +141,7 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
         </GridItem>
         <GridItem>
           <section className="flex flex-col w-full justify-between text-black p-4 rounded-[10px]">
-            <TabLayout posted={publications} />
+            <ProfileTabLayout main={publications} secondary={[]} />
           </section>
         </GridItem>
       </Grid>

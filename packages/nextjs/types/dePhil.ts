@@ -22,3 +22,8 @@ export interface IProfile {
   publications: IPublication[];
   publicationIds: bigint;
 }
+
+export interface IPublicationTabs {
+  main: IPublication[];
+  secondary: IPublication[];
+}
