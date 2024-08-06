@@ -27,13 +27,16 @@ export default function PostCard({ data }: IPostCardProps) {
     return null;
   }
 
-  const { title, summary, author, cost, upVotes, downVotes, commentsCount, tags, createdAt } = data;
+  const { id, title, summary, author, cost, upVotes, downVotes, commentsCount, tags, createdAt } = data;
 
-  const { useGetProfile } = useReadDePhilContractHooks();
+  console.log(upVotes, downVotes, commentsCount);
+
+  const { useGetProfile, useGetPublication } = useReadDePhilContractHooks();
   const { data: user, isLoading } = useGetProfile(author);
+  const { data: publication } = useGetPublication(id);
 
   return (
-    <Card>
+    <Card boxShadow="none">
       <CardHeader className="font-extrabold text-[28px]">{title}</CardHeader>
       <CardBody>
         {isLoading && (
@@ -73,15 +76,15 @@ export default function PostCard({ data }: IPostCardProps) {
           <span className="flex gap-1 text-[18px]">
             <span className="flex gap-1 justify-center items-center">
               <HiOutlineHandThumbUp />
-              {Number(upVotes)}
+              {Number((publication as IPublication)?.upVotes)}
             </span>
             <span className="flex gap-1 justify-center items-center">
               <HiOutlineHandThumbDown />
-              {Number(downVotes)}
+              {Number((publication as IPublication)?.downVotes)}
             </span>
           </span>
           <span className="flex gap-1 justify-center items-center">
-            <TfiCommentAlt /> {Number(commentsCount)}
+            <TfiCommentAlt /> {Number((publication as IPublication)?.commentsCount)}
           </span>
         </div>
       </CardFooter>

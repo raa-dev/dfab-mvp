@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import {
   Avatar,
   AvatarGroup,
-  Box,
   Button,
   Grid,
   GridItem,
@@ -72,7 +71,7 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
 
   return (
     <div className="flex flex-col self-center w-full max-w-[1112px] gap-[32px]">
-      <div className="xl:m-10 p-10 flex w-full justify-between bg-white text-black self-center rounded-[10px]">
+      <div className="xl:m-10 p-10 flex w-full justify-between bg-white text-black self-center rounded-[10px] shadow-2xl">
         <div className="flex flex-col gap-[8px]">
           <Avatar size="lg" />
           <span className="flex flex-col justify-center gap-[8px] text-[20px]">
@@ -98,13 +97,13 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
           </div>
           <span className="flex font-bold justify-center items-center gap-[8px]">
             <h1 className="text-[28px] text-[#FC4100]">{Number(userPoints) ?? "0"}</h1>
-            <h1 className="text-[20px] text-[#00215E]">points</h1>
+            <h1 className="text-[20px] text-[#00215E]">{Number(userPoints) > 1 ? "points" : "point"}</h1>
           </span>
         </div>
       </div>
       <Grid templateColumns="repeat(2,1fr)" gap={4} h="100%">
         <GridItem>
-          <section className="flex flex-col w-3/4 justify-between bg-white text-black p-4 rounded-[10px]">
+          <section className="flex flex-col w-3/4 justify-between bg-white text-black p-4 rounded-[10px] shadow-2xl">
             <span className="flex flex-col gap-[8px]">
               <h1 className="font-bold text-[20px]">Bio</h1>
               <span>
@@ -141,7 +140,7 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
           </section>
         </GridItem>
         <GridItem>
-          <section className="flex flex-col w-full justify-between bg-white text-black p-4 rounded-[10px]">
+          <section className="flex flex-col w-full justify-between text-black p-4 rounded-[10px]">
             <TabLayout posted={publications} />
           </section>
         </GridItem>

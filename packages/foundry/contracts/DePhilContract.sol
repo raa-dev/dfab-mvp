@@ -78,6 +78,11 @@ contract DePhilContract is Ownable {
         address indexed author,
         uint256 quantity
     );
+    event PublicationCommented(
+        uint256 indexed id,
+        address indexed commentAuthor,
+        string content
+    );
     event PublicationUpdated(
         uint256 indexed id,
         string title,
@@ -234,12 +239,30 @@ contract DePhilContract is Ownable {
     function upvotePublication(uint256 publicationId) external {
         publications[publicationId].upVotes += 1;
         userPoints[publications[publicationId].author] += 1;
+
+        address publicationOwner = publications[publicationId].author;
+        for (uint256 index = 0; index < profiles[publicationOwner].publications.length; index++) {
+            if (profiles[publicationOwner].publications[index].id == publications[publicationId].id) {
+                profiles[publicationOwner].publications[index].upVotes += 1;
+                break;
+            }
+        }
+
         emit PublicationVoted(publicationId, msg.sender, "upvote");
     }
 
     function downvotePublication(uint256 publicationId) external {
         publications[publicationId].downVotes += 1;
         userPoints[publications[publicationId].author] += 1;
+
+        address publicationOwner = publications[publicationId].author;
+        for (uint256 index = 0; index < profiles[publicationOwner].publications.length; index++) {
+            if (profiles[publicationOwner].publications[index].id == publications[publicationId].id) {
+                profiles[publicationOwner].publications[index].downVotes += 1;
+                break;
+            }
+        }
+
         emit PublicationVoted(publicationId, msg.sender, "downvote");
     }
 
@@ -252,6 +275,9 @@ contract DePhilContract is Ownable {
             content: content,
             createdAt: block.timestamp
         });
+        publications[publicationId].commentsCount++;
+        
+        emit PublicationCommented(publicationId, msg.sender, content);
     }
 
     function getComments(

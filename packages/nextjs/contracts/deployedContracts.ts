@@ -846,6 +846,73 @@ const deployedContracts = {
                   ],
                 },
                 {
+                  name: "minted",
+                  type: "tuple[]",
+                  internalType: "struct DePhilContract.Publication[]",
+                  components: [
+                    {
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "title",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "summary",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "upVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "downVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "commentsCount",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "tags",
+                      type: "string[]",
+                      internalType: "string[]",
+                    },
+                    {
+                      name: "createdAt",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "quantity",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+                {
                   name: "publicationIds",
                   type: "uint256[]",
                   internalType: "uint256[]",
@@ -1100,6 +1167,31 @@ const deployedContracts = {
               type: "address",
               indexed: true,
               internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationCommented",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "commentAuthor",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "content",
+              type: "string",
+              indexed: false,
+              internalType: "string",
             },
           ],
           anonymous: false,
@@ -2052,6 +2144,73 @@ const deployedContracts = {
                   ],
                 },
                 {
+                  name: "minted",
+                  type: "tuple[]",
+                  internalType: "struct DePhilContract.Publication[]",
+                  components: [
+                    {
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "title",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "summary",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "upVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "downVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "commentsCount",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "tags",
+                      type: "string[]",
+                      internalType: "string[]",
+                    },
+                    {
+                      name: "createdAt",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "quantity",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+                {
                   name: "publicationIds",
                   type: "uint256[]",
                   internalType: "uint256[]",
@@ -2306,6 +2465,31 @@ const deployedContracts = {
               type: "address",
               indexed: true,
               internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationCommented",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "commentAuthor",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "content",
+              type: "string",
+              indexed: false,
+              internalType: "string",
             },
           ],
           anonymous: false,
