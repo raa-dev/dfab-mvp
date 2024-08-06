@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Input, InputGroup, InputLeftElement, Button, Text, Image, Box } from "@chakra-ui/react";
-import { SearchIcon, EditIcon } from "@chakra-ui/icons";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import dynamic from 'next/dynamic';
+import { EditIcon, SearchIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Image, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { FaucetButton } from "~~/components/scaffold-eth";
 
 const DynamicRainbowKitCustomConnectButton = dynamic(
-  () => import('~~/components/scaffold-eth').then((mod) => mod.RainbowKitCustomConnectButton),
-  { ssr: false }
+  () => import("~~/components/scaffold-eth").then(mod => mod.RainbowKitCustomConnectButton),
+  { ssr: false },
 );
 
 export const Header = () => {
@@ -32,11 +33,11 @@ export const Header = () => {
         <InputLeftElement pointerEvents="none" pl={3}>
           <SearchIcon color="black" />
         </InputLeftElement>
-        <Input 
-          placeholder="Search" 
-          bg="white" 
-          borderColor="gray.300" 
-          _placeholder={{ color: 'black' }}
+        <Input
+          placeholder="Search"
+          bg="white"
+          borderColor="gray.300"
+          _placeholder={{ color: "black" }}
           color="black"
           pl={10}
         />
@@ -46,27 +47,19 @@ export const Header = () => {
         {isClient && (
           <>
             <Link href="/upload" passHref>
-            <Button
-              leftIcon={<EditIcon />}
-              colorScheme="orange"
-              variant="solid"
-            >
-              Upload Article
-            </Button>
-          </Link>
+              <Button leftIcon={<EditIcon />} colorScheme="orange" variant="solid">
+                Upload Article
+              </Button>
+            </Link>
             <Box mr={3}>
               <Link href="/debug" passHref>
-                <Button
-                  as="a"
-                  variant="ghost"
-                  color="black"
-                  aria-current={pathname === "/debug" ? "page" : undefined}
-                >
+                <Button as="a" variant="ghost" color="black" aria-current={pathname === "/debug" ? "page" : undefined}>
                   Debug Contracts
                 </Button>
               </Link>
             </Box>
             <DynamicRainbowKitCustomConnectButton />
+            <FaucetButton />
           </>
         )}
       </Flex>

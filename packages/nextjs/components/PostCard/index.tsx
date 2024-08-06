@@ -16,6 +16,7 @@ import { HiOutlineHandThumbDown, HiOutlineHandThumbUp } from "react-icons/hi2";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { useReadDePhilContractHooks } from "~~/hooks/useDePhilContract";
 import { IProfile, IPublication } from "~~/types/dePhil";
+import { formatedDate } from "~~/utils/scaffold-eth/common";
 
 interface IPostCardProps {
   data: IPublication;
@@ -27,12 +28,6 @@ export default function PostCard({ data }: IPostCardProps) {
   }
 
   const { title, summary, author, cost, upVotes, downVotes, commentsCount, tags, createdAt } = data;
-
-  const formatedDate = new Date(Number(createdAt)).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
 
   const { useGetProfile } = useReadDePhilContractHooks();
   const { data: user, isLoading } = useGetProfile(author);
@@ -53,7 +48,7 @@ export default function PostCard({ data }: IPostCardProps) {
               <Avatar size="sm" />
               <p className="text-[18px]">{(user as IProfile)?.username}</p>
             </div>
-            <p className="text-[18px]">{formatedDate}</p>
+            <p className="text-[18px]">{formatedDate(createdAt)}</p>
             <p className="text-[19.3px]">{summary}</p>
             <span>
               {tags.map((tag, i) => {
