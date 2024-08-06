@@ -24,6 +24,10 @@ export const Header = () => {
     setIsClient(true);
   }, []);
 
+  const handleUpload = () => {
+    alert("Upload article");
+  };
+
   return (
     <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="#e1e3eb" w="100vw">
       <Flex align="center" mr={5}>
@@ -49,11 +53,9 @@ export const Header = () => {
       <Flex align="center" gap="8px">
         {isClient && (
           <>
-            <Link href="/upload" passHref>
-              <Button leftIcon={<FaFileUpload />} colorScheme="orange" variant="solid">
-                Upload Article
-              </Button>
-            </Link>
+            <Button onClick={handleUpload} leftIcon={<FaFileUpload />} colorScheme="orange" variant="solid">
+              Upload Article
+            </Button>
             {isLocalNetwork && (
               <Box mr={3}>
                 <Link href="/debug" passHref>
