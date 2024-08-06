@@ -8,6 +8,7 @@ import { FaFileUpload } from "react-icons/fa";
 import { hardhat } from "viem/chains";
 import { FaucetButton } from "~~/components/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
+import CreatePublicationModal from "./CreatePublicationModal";
 
 const DynamicRainbowKitCustomConnectButton = dynamic(
   () => import("~~/components/scaffold-eth").then(mod => mod.RainbowKitCustomConnectButton),
@@ -16,6 +17,7 @@ const DynamicRainbowKitCustomConnectButton = dynamic(
 
 export const Header = () => {
   const pathname = usePathname();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const { targetNetwork } = useTargetNetwork();
   const isLocalNetwork = targetNetwork.id === hardhat.id;
@@ -25,7 +27,11 @@ export const Header = () => {
   }, []);
 
   const handleUpload = () => {
-    alert("Upload article");
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -75,6 +81,7 @@ export const Header = () => {
           </>
         )}
       </Flex>
+      <CreatePublicationModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </Flex>
   );
 };

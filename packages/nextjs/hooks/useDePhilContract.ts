@@ -183,6 +183,8 @@ export function useWriteDePhilContractHooks() {
   };
 
   return {
+    targetNetwork,
+    deployedContractData,
     useAddProfile,
     useAddComment,
     useFollow,

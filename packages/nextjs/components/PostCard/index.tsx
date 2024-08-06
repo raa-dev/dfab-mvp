@@ -11,7 +11,6 @@ import {
   SkeletonText,
   Tag,
 } from "@chakra-ui/react";
-import { FaEthereum } from "react-icons/fa";
 import { HiOutlineHandThumbDown, HiOutlineHandThumbUp } from "react-icons/hi2";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { useReadDePhilContractHooks } from "~~/hooks/useDePhilContract";
@@ -63,9 +62,7 @@ export default function PostCard({ data }: IPostCardProps) {
               })}
             </span>
             <div className="flex justify-between w-full">
-              <span className="flex gap-1 items-center text-[20px]">
-                {Number(cost)} <FaEthereum />
-              </span>
+              <span className="flex gap-1 items-center text-[20px]">{Number(cost)} ETH</span>
               <Button colorScheme="orange">Mint</Button>
             </div>
           </span>
