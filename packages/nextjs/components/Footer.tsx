@@ -30,12 +30,11 @@ export const Footer = () => {
       )}
       <Flex direction="column" align="center" maxW="1200px" mx="auto">
         <Image src="/dephil-logo-2.png" alt="DePhil Logo" mb={4} height="50px" />
-
-        <SimpleGrid columns={4} spacing={4} width="100%" justifyItems="center" mb={4}>
+        <SimpleGrid columns={4} spacing={4} width="35%" justifyItems="center" mb={4}>
           {teamMembers.map(member => (
-            <VStack key={member.name} spacing={2}>
+            <VStack key={member.name} >
               <Avatar name={member.name} src={member.image} size="md" />
-              <Text fontSize="sm" fontWeight="medium" color="black" textAlign="center">
+              <Text fontSize="md" fontWeight="bold" color="black" textAlign="center">
                 {member.name}
               </Text>
             </VStack>
