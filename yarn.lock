@@ -8565,6 +8565,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "jotai@npm:2.9.1"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 4ed48d62f7c47aa56f71238b28dfce60e32a8e289a8283c5c26a96bc9f83d69f324e1d464fd61615bb9624f7f097e25d53d2fb19f3a6371869de82286822a93c
+  languageName: node
+  linkType: hard
+
 "js-sdsl@npm:^4.1.4":
   version: 4.4.2
   resolution: "js-sdsl@npm:4.4.2"
@@ -11173,6 +11188,7 @@ __metadata:
     "@emotion/styled": ^11.13.0
     framer-motion: ^11.3.21
     husky: ^8.0.0
+    jotai: ^2.9.1
     lint-staged: ~13.2.2
   languageName: unknown
   linkType: soft

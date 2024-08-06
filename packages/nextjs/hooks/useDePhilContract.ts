@@ -1,6 +1,7 @@
+import { Hex } from "viem";
 import { useDeployedContractInfo } from "./scaffold-eth/useDeployedContractInfo";
 import { useTargetNetwork } from "./scaffold-eth/useTargetNetwork";
-import { useReadContract } from "wagmi";
+import { useReadContract, useWriteContract } from "wagmi";
 import { ContractName } from "~~/utils/scaffold-eth/contract";
 import { getAllContracts } from "~~/utils/scaffold-eth/contractsData";
 
@@ -75,5 +76,28 @@ export function useReadDePhilContractHooks() {
     useGetProfile,
     useGetComments,
     useGetUserPoints,
+  };
+}
+
+export function useWriteDePhilContractHooks() {
+  const { targetNetwork } = useTargetNetwork();
+  const contractsData = getAllContracts();
+  const contractNames = Object.keys(contractsData) as ContractName[];
+  const { data: deployedContractData } = useDeployedContractInfo(contractNames[1]);
+
+  const useAddProfile = (address: Hex) => {
+    const { writeContract } = useWriteContract();
+
+    writeContract({
+      chainId: targetNetwork.id,
+      abi: deployedContractData?.abi,
+      address: deployedContractData?.address,
+      functionName: "addProfile",
+      args: [address],
+    });
+  };
+
+  return {
+    useAddProfile,
   };
 }
