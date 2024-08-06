@@ -1305,7 +1305,7 @@ const deployedContracts = {
   },
   421614: {
     DePhilPublicationContract: {
-      address: "0x4C851243072558742179683375A36c801345DC7D",
+      address: "0xDd228e5c8F3C6ad2d5649Da8388C682a2868345F",
       abi: [
         {
           type: "constructor",
@@ -1884,7 +1884,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     DePhilContract: {
-      address: "0x9849154804176D431488461B7073F0b5C22c7230",
+      address: "0xa145F19c51BE26D576B5A34afB0c85226f950645",
       abi: [
         {
           type: "constructor",
