@@ -51,13 +51,13 @@ export default function CreatePublicationModal({ isOpen, onClose }: { isOpen: bo
 
   const handleCreatePublication = async () => {
     try {
-      const uri = await uploadFileToIPFS(file);
+      // const uri = await uploadFileToIPFS(file);
       await writeContract({
         chainId: targetNetwork.id,
         abi: deployedContractData?.abi ?? [],
         address: deployedContractData?.address ?? "0x0",
         functionName: "createPublication",
-        args: [uri, title, summary, BigInt(cost), parseTags(tags), BigInt(quantity)],
+        args: ["uri", title, summary, BigInt(cost), parseTags(tags), BigInt(quantity)],
       });
       onClose();
     } catch (error) {
@@ -112,7 +112,19 @@ export default function CreatePublicationModal({ isOpen, onClose }: { isOpen: bo
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleCreatePublication}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => {
+                writeContract({
+                  chainId: targetNetwork.id,
+                  abi: deployedContractData?.abi ?? [],
+                  address: deployedContractData?.address ?? "0x0",
+                  functionName: "createPublication",
+                  args: ["uri", title, summary, BigInt(cost), parseTags(tags), BigInt(quantity)],
+                });
+              }}
+            >
               Create
             </Button>
             <Button onClick={onClose}>Cancel</Button>

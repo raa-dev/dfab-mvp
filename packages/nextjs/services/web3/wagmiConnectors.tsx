@@ -6,6 +6,7 @@ import {
   rainbowWallet,
   safeWallet,
   walletConnectWallet,
+  zerionWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { rainbowkitBurnerWallet } from "burner-connector";
 import * as chains from "viem/chains";
@@ -20,6 +21,7 @@ const wallets = [
   coinbaseWallet,
   rainbowWallet,
   safeWallet,
+  zerionWallet,
   ...(!targetNetworks.some(network => network.id !== (chains.hardhat as chains.Chain).id) || !onlyLocalBurnerWallet
     ? [rainbowkitBurnerWallet]
     : []),

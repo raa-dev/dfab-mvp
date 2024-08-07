@@ -646,6 +646,32 @@ const deployedContracts = {
         },
         {
           type: "function",
+          name: "buyMultiplePublications",
+          inputs: [
+            {
+              name: "publicationIds",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "buyPublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
           name: "createPublication",
           inputs: [
             {
@@ -784,11 +810,6 @@ const deployedContracts = {
                   internalType: "struct DePhilContract.Publication[]",
                   components: [
                     {
-                      name: "uri",
-                      type: "string",
-                      internalType: "string",
-                    },
-                    {
                       name: "id",
                       type: "uint256",
                       internalType: "uint256",
@@ -805,6 +826,11 @@ const deployedContracts = {
                     },
                     {
                       name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "owner",
                       type: "address",
                       internalType: "address",
                     },
@@ -834,12 +860,17 @@ const deployedContracts = {
                       internalType: "string[]",
                     },
                     {
-                      name: "createdAt",
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "quantity",
                       type: "uint256",
                       internalType: "uint256",
                     },
                     {
-                      name: "quantity",
+                      name: "createdAt",
                       type: "uint256",
                       internalType: "uint256",
                     },
@@ -851,11 +882,6 @@ const deployedContracts = {
                   internalType: "struct DePhilContract.Publication[]",
                   components: [
                     {
-                      name: "uri",
-                      type: "string",
-                      internalType: "string",
-                    },
-                    {
                       name: "id",
                       type: "uint256",
                       internalType: "uint256",
@@ -872,6 +898,11 @@ const deployedContracts = {
                     },
                     {
                       name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "owner",
                       type: "address",
                       internalType: "address",
                     },
@@ -901,12 +932,17 @@ const deployedContracts = {
                       internalType: "string[]",
                     },
                     {
-                      name: "createdAt",
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "quantity",
                       type: "uint256",
                       internalType: "uint256",
                     },
                     {
-                      name: "quantity",
+                      name: "createdAt",
                       type: "uint256",
                       internalType: "uint256",
                     },
@@ -939,11 +975,6 @@ const deployedContracts = {
               internalType: "struct DePhilContract.Publication",
               components: [
                 {
-                  name: "uri",
-                  type: "string",
-                  internalType: "string",
-                },
-                {
                   name: "id",
                   type: "uint256",
                   internalType: "uint256",
@@ -960,6 +991,11 @@ const deployedContracts = {
                 },
                 {
                   name: "author",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "owner",
                   type: "address",
                   internalType: "address",
                 },
@@ -989,12 +1025,17 @@ const deployedContracts = {
                   internalType: "string[]",
                 },
                 {
-                  name: "createdAt",
+                  name: "uri",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "quantity",
                   type: "uint256",
                   internalType: "uint256",
                 },
                 {
-                  name: "quantity",
+                  name: "createdAt",
                   type: "uint256",
                   internalType: "uint256",
                 },
@@ -1173,6 +1214,37 @@ const deployedContracts = {
         },
         {
           type: "event",
+          name: "PublicationBought",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "buyer",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "seller",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "cost",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
           name: "PublicationCommented",
           inputs: [
             {
@@ -1303,9 +1375,9 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
   },
-  421614: {
+  42161: {
     DePhilPublicationContract: {
-      address: "0xDd228e5c8F3C6ad2d5649Da8388C682a2868345F",
+      address: "0x933d72D62CaeDf569d534e33bDF0426F24585a15",
       abi: [
         {
           type: "constructor",
@@ -1884,7 +1956,7 @@ const deployedContracts = {
       inheritedFunctions: {},
     },
     DePhilContract: {
-      address: "0xa145F19c51BE26D576B5A34afB0c85226f950645",
+      address: "0x1d26D69756643a5D798B04A590F29Cb3C7df45B9",
       abi: [
         {
           type: "constructor",
@@ -1941,6 +2013,32 @@ const deployedContracts = {
           ],
           outputs: [],
           stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "buyMultiplePublications",
+          inputs: [
+            {
+              name: "publicationIds",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "buyPublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
         },
         {
           type: "function",
@@ -2082,11 +2180,6 @@ const deployedContracts = {
                   internalType: "struct DePhilContract.Publication[]",
                   components: [
                     {
-                      name: "uri",
-                      type: "string",
-                      internalType: "string",
-                    },
-                    {
                       name: "id",
                       type: "uint256",
                       internalType: "uint256",
@@ -2103,6 +2196,11 @@ const deployedContracts = {
                     },
                     {
                       name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "owner",
                       type: "address",
                       internalType: "address",
                     },
@@ -2132,12 +2230,17 @@ const deployedContracts = {
                       internalType: "string[]",
                     },
                     {
-                      name: "createdAt",
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "quantity",
                       type: "uint256",
                       internalType: "uint256",
                     },
                     {
-                      name: "quantity",
+                      name: "createdAt",
                       type: "uint256",
                       internalType: "uint256",
                     },
@@ -2149,11 +2252,6 @@ const deployedContracts = {
                   internalType: "struct DePhilContract.Publication[]",
                   components: [
                     {
-                      name: "uri",
-                      type: "string",
-                      internalType: "string",
-                    },
-                    {
                       name: "id",
                       type: "uint256",
                       internalType: "uint256",
@@ -2170,6 +2268,11 @@ const deployedContracts = {
                     },
                     {
                       name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "owner",
                       type: "address",
                       internalType: "address",
                     },
@@ -2199,12 +2302,17 @@ const deployedContracts = {
                       internalType: "string[]",
                     },
                     {
-                      name: "createdAt",
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "quantity",
                       type: "uint256",
                       internalType: "uint256",
                     },
                     {
-                      name: "quantity",
+                      name: "createdAt",
                       type: "uint256",
                       internalType: "uint256",
                     },
@@ -2237,11 +2345,6 @@ const deployedContracts = {
               internalType: "struct DePhilContract.Publication",
               components: [
                 {
-                  name: "uri",
-                  type: "string",
-                  internalType: "string",
-                },
-                {
                   name: "id",
                   type: "uint256",
                   internalType: "uint256",
@@ -2258,6 +2361,11 @@ const deployedContracts = {
                 },
                 {
                   name: "author",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "owner",
                   type: "address",
                   internalType: "address",
                 },
@@ -2287,12 +2395,17 @@ const deployedContracts = {
                   internalType: "string[]",
                 },
                 {
-                  name: "createdAt",
+                  name: "uri",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "quantity",
                   type: "uint256",
                   internalType: "uint256",
                 },
                 {
-                  name: "quantity",
+                  name: "createdAt",
                   type: "uint256",
                   internalType: "uint256",
                 },
@@ -2465,6 +2578,1407 @@ const deployedContracts = {
               type: "address",
               indexed: true,
               internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationBought",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "buyer",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "seller",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "cost",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationCommented",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "commentAuthor",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "content",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationCreated",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "title",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "author",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "quantity",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationUpdated",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "title",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "author",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationVoted",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "voter",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "typeofvote",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "error",
+          name: "OwnableInvalidOwner",
+          inputs: [
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "OwnableUnauthorizedAccount",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+      ],
+      inheritedFunctions: {},
+    },
+  },
+  421614: {
+    DePhilPublicationContract: {
+      address: "0x4fe2f99ac0CC0aE60c1b47da471c835a8Eae836C",
+      abi: [
+        {
+          type: "constructor",
+          inputs: [
+            {
+              name: "initialOwner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "_URI",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "balanceOf",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "balanceOfBatch",
+          inputs: [
+            {
+              name: "accounts",
+              type: "address[]",
+              internalType: "address[]",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "isApprovedForAll",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "mint",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "data",
+              type: "bytes",
+              internalType: "bytes",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "mintBatch",
+          inputs: [
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "amounts",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "data",
+              type: "bytes",
+              internalType: "bytes",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "owner",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "renounceOwnership",
+          inputs: [],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "safeBatchTransferFrom",
+          inputs: [
+            {
+              name: "from",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "values",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "data",
+              type: "bytes",
+              internalType: "bytes",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "safeTransferFrom",
+          inputs: [
+            {
+              name: "from",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "value",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "data",
+              type: "bytes",
+              internalType: "bytes",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "setApprovalForAll",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "approved",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "setURI",
+          inputs: [
+            {
+              name: "newuri",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "supportsInterface",
+          inputs: [
+            {
+              name: "interfaceId",
+              type: "bytes4",
+              internalType: "bytes4",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "transferOwnership",
+          inputs: [
+            {
+              name: "newOwner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "uri",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "event",
+          name: "ApprovalForAll",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "operator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "approved",
+              type: "bool",
+              indexed: false,
+              internalType: "bool",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "OwnershipTransferred",
+          inputs: [
+            {
+              name: "previousOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "newOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "TransferBatch",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "from",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              indexed: false,
+              internalType: "uint256[]",
+            },
+            {
+              name: "values",
+              type: "uint256[]",
+              indexed: false,
+              internalType: "uint256[]",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "TransferSingle",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "from",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "value",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "URI",
+          inputs: [
+            {
+              name: "value",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "error",
+          name: "ERC1155InsufficientBalance",
+          inputs: [
+            {
+              name: "sender",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "balance",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "needed",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "tokenId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidApprover",
+          inputs: [
+            {
+              name: "approver",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidArrayLength",
+          inputs: [
+            {
+              name: "idsLength",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "valuesLength",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidOperator",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidReceiver",
+          inputs: [
+            {
+              name: "receiver",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidSender",
+          inputs: [
+            {
+              name: "sender",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155MissingApprovalForAll",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "OwnableInvalidOwner",
+          inputs: [
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "OwnableUnauthorizedAccount",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+      ],
+      inheritedFunctions: {},
+    },
+    DePhilContract: {
+      address: "0xa228dA855276aCBAD37DA3eBda4cC9DD1778aA57",
+      abi: [
+        {
+          type: "constructor",
+          inputs: [
+            {
+              name: "_owner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "_publicationContractAddress",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "receive",
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "addComment",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "content",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "addProfile",
+          inputs: [
+            {
+              name: "_bio",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "_username",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "buyMultiplePublications",
+          inputs: [
+            {
+              name: "publicationIds",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "buyPublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "createPublication",
+          inputs: [
+            {
+              name: "uri",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "title",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "summary",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "cost",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "tags",
+              type: "string[]",
+              internalType: "string[]",
+            },
+            {
+              name: "quantity",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "downvotePublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "follow",
+          inputs: [
+            {
+              name: "_address",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "getComments",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "address[]",
+              internalType: "address[]",
+            },
+            {
+              name: "",
+              type: "string[]",
+              internalType: "string[]",
+            },
+            {
+              name: "",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getProfile",
+          inputs: [
+            {
+              name: "_address",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple",
+              internalType: "struct DePhilContract.Profile",
+              components: [
+                {
+                  name: "bio",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "username",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "owner",
+                  type: "address",
+                  internalType: "address payable",
+                },
+                {
+                  name: "following",
+                  type: "address[]",
+                  internalType: "address[]",
+                },
+                {
+                  name: "followers",
+                  type: "address[]",
+                  internalType: "address[]",
+                },
+                {
+                  name: "publications",
+                  type: "tuple[]",
+                  internalType: "struct DePhilContract.Publication[]",
+                  components: [
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "title",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "summary",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "owner",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "upVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "downVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "commentsCount",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "tags",
+                      type: "string[]",
+                      internalType: "string[]",
+                    },
+                    {
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "quantity",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "createdAt",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+                {
+                  name: "minted",
+                  type: "tuple[]",
+                  internalType: "struct DePhilContract.Publication[]",
+                  components: [
+                    {
+                      name: "id",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "title",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "summary",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "author",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "owner",
+                      type: "address",
+                      internalType: "address",
+                    },
+                    {
+                      name: "cost",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "upVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "downVotes",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "commentsCount",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "tags",
+                      type: "string[]",
+                      internalType: "string[]",
+                    },
+                    {
+                      name: "uri",
+                      type: "string",
+                      internalType: "string",
+                    },
+                    {
+                      name: "quantity",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                    {
+                      name: "createdAt",
+                      type: "uint256",
+                      internalType: "uint256",
+                    },
+                  ],
+                },
+                {
+                  name: "publicationIds",
+                  type: "uint256[]",
+                  internalType: "uint256[]",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getPublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "tuple",
+              internalType: "struct DePhilContract.Publication",
+              components: [
+                {
+                  name: "id",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "title",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "summary",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "author",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "owner",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "cost",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "upVotes",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "downVotes",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "commentsCount",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "tags",
+                  type: "string[]",
+                  internalType: "string[]",
+                },
+                {
+                  name: "uri",
+                  type: "string",
+                  internalType: "string",
+                },
+                {
+                  name: "quantity",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "createdAt",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "nextPublicationId",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "owner",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "publicationContractAddress",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "renounceOwnership",
+          inputs: [],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "transferOwnership",
+          inputs: [
+            {
+              name: "newOwner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "unfollow",
+          inputs: [
+            {
+              name: "_address",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "updatePublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "uri",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "title",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "summary",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "cost",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "tags",
+              type: "string[]",
+              internalType: "string[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "upvotePublication",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "userPoints",
+          inputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "withdraw",
+          inputs: [],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "event",
+          name: "OwnershipTransferred",
+          inputs: [
+            {
+              name: "previousOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "newOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "PublicationBought",
+          inputs: [
+            {
+              name: "publicationId",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "buyer",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "seller",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "cost",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
             },
           ],
           anonymous: false,

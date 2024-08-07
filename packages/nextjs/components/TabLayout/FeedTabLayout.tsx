@@ -1,5 +1,5 @@
 import PostCard from "../PostCard";
-import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { Grid, Spinner, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { IPublicationTabs } from "~~/types/dePhil";
 
 export default function FeedTabLayout({ main, secondary }: IPublicationTabs) {
@@ -12,8 +12,14 @@ export default function FeedTabLayout({ main, secondary }: IPublicationTabs) {
   return (
     <Tabs isFitted colorScheme="orange">
       <TabList fontWeight="bold" fontSize="28">
-        <Tab>Featured</Tab>
-        <Tab>Following</Tab>
+        {main ? (
+          <>
+            <Tab>Featured</Tab>
+            <Tab>Following</Tab>
+          </>
+        ) : (
+          <Spinner />
+        )}
       </TabList>
       <TabPanels>
         <TabPanel>

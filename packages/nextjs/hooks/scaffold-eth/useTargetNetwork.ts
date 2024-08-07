@@ -18,7 +18,11 @@ export function useTargetNetwork(): { targetNetwork: ChainWithAttributes } {
     if (newSelectedNetwork && newSelectedNetwork.id !== targetNetwork.id) {
       setTargetNetwork(newSelectedNetwork);
     }
+
+    console.log(newSelectedNetwork?.id !== targetNetwork.id)
+
   }, [chain?.id, setTargetNetwork, targetNetwork.id]);
+
 
   return useMemo(
     () => ({

@@ -34,18 +34,19 @@ contract DePhilContract is Ownable {
     }
 
     struct Publication {
-        string uri;
         uint256 id;
         string title;
         string summary;
         address author;
+        address owner;
         uint256 cost;
         uint256 upVotes;
         uint256 downVotes;
         uint256 commentsCount;
         string[] tags;
-        uint256 createdAt;
+        string uri;
         uint256 quantity;
+        uint256 createdAt;
     }
 
     struct Profile {
@@ -93,6 +94,13 @@ contract DePhilContract is Ownable {
         address indexed voter,
         string typeofvote
     );
+    event PublicationBought(
+        uint256 publicationId,
+        address indexed buyer,
+        address indexed seller,
+        uint256 cost
+    );
+
 
     modifier onlyAuthor(uint256 publicationId) {
         require(
@@ -174,20 +182,20 @@ contract DePhilContract is Ownable {
     ) external {
         uint256 newPublicationId = nextPublicationId++;
         Publication memory newPublication = Publication({
-            id: newPublicationId,
-            title: title,
-            summary: summary,
-            author: msg.sender,
-            cost: cost,
-            upVotes: 0,
-            downVotes: 0,
-            commentsCount: 0,
-            tags: tags,
-            uri: uri,
-            quantity: quantity,
-            createdAt: block.timestamp
-        });
-
+        id: newPublicationId,
+        title: title,
+        summary: summary,
+        author: msg.sender,
+        owner: msg.sender,
+        cost: cost,
+        upVotes: 0,
+        downVotes: 0,
+        commentsCount: 0,
+        tags: tags,
+        uri: uri,
+        quantity: quantity,
+        createdAt: block.timestamp
+    });
         publications[newPublicationId] = newPublication;
         profiles[msg.sender].publications.push(newPublication);
         profiles[msg.sender].publicationIds.push(newPublicationId);
@@ -267,15 +275,16 @@ contract DePhilContract is Ownable {
     }
 
     function addComment(uint256 publicationId, string memory content) external {
-        Publication storage pub = publications[publicationId];
-        uint256 newCommentId = pub.commentsCount++;
-        comments[publicationId][newCommentId] = Comment({
+        Publication memory pub = publications[publicationId];
+        pub.commentsCount++;
+        uint256 newCommentId = pub.commentsCount;
+        Comment memory newComment = Comment({
             id: newCommentId,
             author: msg.sender,
             content: content,
             createdAt: block.timestamp
         });
-        publications[publicationId].commentsCount++;
+        comments[publicationId][newCommentId] = newComment;
         
         emit PublicationCommented(publicationId, msg.sender, content);
     }
@@ -319,4 +328,50 @@ contract DePhilContract is Ownable {
     {
         return profiles[_address];
     }
+
+    function buyPublication(uint256 publicationId) external payable {
+        require(publicationId == publications[publicationId].id, "Publication does not exist");
+
+        Publication storage publication = publications[publicationId];
+
+        require(publication.cost > 0, "Publication is not for sale");
+        require(msg.value >= publication.cost, "Insufficient funds sent");
+
+        address payable author = payable(publication.author);
+
+        author.transfer(publication.cost);
+
+        publication.owner = msg.sender;
+
+        emit PublicationBought(publicationId, msg.sender, author, publication.cost);
+    }
+
+    function buyMultiplePublications(uint256[] calldata publicationIds) external payable {
+        uint256 totalCost = 0;
+
+        for (uint256 i = 0; i < publicationIds.length; i++) {
+            uint256 publicationId = publicationIds[i];
+            require(publicationId == publications[publicationId].id, "Publication does not exist");
+
+            Publication storage publication = publications[publicationId];
+            require(publication.cost > 0, "Publication is not for sale");
+
+            totalCost += publication.cost;
+        }
+
+        require(msg.value >= totalCost, "Insufficient funds sent");
+
+        for (uint256 i = 0; i < publicationIds.length; i++) {
+            uint256 publicationId = publicationIds[i];
+            Publication storage publication = publications[publicationId];
+            address payable author = payable(publication.author);
+
+            author.transfer(publication.cost);
+
+            publication.owner = msg.sender;
+
+            emit PublicationBought(publicationId, msg.sender, author, publication.cost);
+        }
+    }
+
 }
