@@ -2,7 +2,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -21,7 +20,7 @@ interface IPostCardProps {
   data: IPublication;
 }
 
-export default function PostCard({ data }: IPostCardProps) {
+export default function OwnPostCard({ data }: IPostCardProps) {
   if (!data) {
     return null;
   }
@@ -61,9 +60,8 @@ export default function PostCard({ data }: IPostCardProps) {
                 );
               })}
             </span>
-            <div className="flex justify-between w-full">
-              <span className="flex gap-1 items-center text-[20px]">{Number(cost)} ETH</span>
-              <Button colorScheme="orange">Mint</Button>
+            <div className="flex justify-between w-full mt-[16px]">
+              <Tag size="lg" className="flex gap-1 justify-center items-center text-[20px] w-full" bgColor="#C2C6D6">{Number(cost)} ETH</Tag>
             </div>
           </span>
         )}

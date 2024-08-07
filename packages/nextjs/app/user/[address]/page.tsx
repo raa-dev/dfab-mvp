@@ -14,8 +14,10 @@ import {
 } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { FaEdit } from "react-icons/fa";
+import { Address } from "viem";
+import { useWriteContract } from "wagmi";
 import { ProfileTabLayout } from "~~/components/TabLayout";
-import { useReadDePhilContractHooks } from "~~/hooks/useDePhilContract";
+import { useReadDePhilContractHooks, useWriteDePhilContractHooks } from "~~/hooks/useDePhilContract";
 import { accountDisplayNameAtom } from "~~/services/state";
 import { IProfile, IPublication } from "~~/types/dePhil";
 
@@ -29,6 +31,9 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
   const { useGetProfile, useGetUserPoints } = useReadDePhilContractHooks();
   const { data: user, isLoading } = useGetProfile(address as string);
   const { data: userPoints } = useGetUserPoints(address as string);
+
+  const { targetNetwork, deployedContractData } = useWriteDePhilContractHooks();
+  const { writeContract } = useWriteContract();
 
   useEffect(() => {
     if (user) {
@@ -114,7 +119,7 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
                 )}
               </span>
             </span>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full justify-between pb-[32px]">
               <span>
                 <h1 className="font-bold text-[20px]">Followers</h1>
                 <AvatarGroup size="sm" max={3}>
@@ -125,7 +130,7 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
                   )}
                 </AvatarGroup>
               </span>
-              <div className="w-[4px] h-[89px] bg-black rounded-[10px]" />
+              <div className="w-[2px] h-[89px] bg-black rounded-[10px]" />
               <span>
                 <h1 className="font-bold text-[20px]">Following</h1>
                 <AvatarGroup size="sm" max={3}>
@@ -137,6 +142,21 @@ const UserProfile = ({ params: { address } }: { params: { address: string } }) =
                 </AvatarGroup>
               </span>
             </div>
+            <Button
+              colorScheme="orange"
+              variant="solid"
+              onClick={() => {
+                writeContract({
+                  chainId: targetNetwork.id,
+                  abi: deployedContractData?.abi ?? [],
+                  address: deployedContractData?.address ?? "0x0",
+                  functionName: "follow",
+                  args: [address as unknown as Address],
+                });
+              }}
+            >
+              Follow
+            </Button>
           </section>
         </GridItem>
         <GridItem>

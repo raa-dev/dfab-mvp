@@ -158,17 +158,6 @@ export function useWriteDePhilContractHooks() {
     });
   };
 
-  const useCreatePublication = ({ uri, title, summary, cost, tags, quantity }: IPublication) => {
-    const { writeContract } = useWriteContract();
-
-    writeContract({
-      chainId: targetNetwork.id,
-      abi: deployedContractData?.abi ?? [],
-      address: deployedContractData?.address ?? "0x0",
-      functionName: "createPublication",
-      args: [uri, title, summary, cost, tags, quantity],
-    });
-  };
 
   const useUpdatePublication = ({ id, uri, title, summary, cost, tags }: IPublication) => {
     const { writeContract } = useWriteContract();
@@ -191,7 +180,6 @@ export function useWriteDePhilContractHooks() {
     useUnfollow,
     useUpVotePublication,
     useDownVotePublication,
-    useCreatePublication,
     useUpdatePublication,
   };
 }

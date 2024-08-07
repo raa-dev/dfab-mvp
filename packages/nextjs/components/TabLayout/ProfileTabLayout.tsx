@@ -1,3 +1,4 @@
+import OwnPostCard from "../OwnPost";
 import PostCard from "../PostCard";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { IPublicationTabs } from "~~/types/dePhil";
@@ -13,7 +14,7 @@ export default function ProfileTabLayout({ main, secondary }: IPublicationTabs) 
         <TabPanel>
           {main?.map((post, index) => (
             <div key={index} className="py-[16px] shadow-2xl rounded-[10px]">
-              <PostCard data={post} />
+              <OwnPostCard data={post} />
             </div>
           ))}
         </TabPanel>
