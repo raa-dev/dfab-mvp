@@ -11,6 +11,7 @@ import { notification } from "~~/utils/scaffold-eth";
 const BlockExplorer: NextPage = () => {
   const { blocks, transactionReceipts, currentPage, totalBlocks, setCurrentPage, error } = useFetchBlocks();
   const { targetNetwork } = useTargetNetwork();
+  console.log(targetNetwork)
   const [isLocalNetwork, setIsLocalNetwork] = useState(true);
   const [hasError, setHasError] = useState(false);
 

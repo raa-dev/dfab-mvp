@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { NetworkOptions } from "./NetworkOptions";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { CgProfile } from "react-icons/cg";
 import { getAddress } from "viem";
 import { Address } from "viem";
 import { useDisconnect } from "wagmi";
@@ -60,6 +62,14 @@ export const AddressInfoDropdown = ({
           className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
         >
           <NetworkOptions hidden={!selectingNetwork} />
+          <li className={selectingNetwork ? "hidden" : ""}>
+            <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button">
+              <CgProfile />
+              <Link href={`/user/${checkSumAddress}`} className="whitespace-nowrap">
+                <span className="whitespace-nowrap">Profile</span>
+              </Link>
+            </button>
+          </li>
           <li className={selectingNetwork ? "hidden" : ""}>
             {addressCopied ? (
               <div className="btn-sm !rounded-xl flex gap-3 py-3">

@@ -54,7 +54,8 @@ contract DePhilContract is Ownable {
         address payable owner;
         address[] following;
         address[] followers;
-        mapping(uint256 => Publication) publications;
+        Publication[] publications;
+        Publication[] minted;
         uint256[] publicationIds;
     }
 
@@ -76,6 +77,11 @@ contract DePhilContract is Ownable {
         string title,
         address indexed author,
         uint256 quantity
+    );
+    event PublicationCommented(
+        uint256 indexed id,
+        address indexed commentAuthor,
+        string content
     );
     event PublicationUpdated(
         uint256 indexed id,
@@ -183,7 +189,7 @@ contract DePhilContract is Ownable {
         });
 
         publications[newPublicationId] = newPublication;
-        profiles[msg.sender].publications[newPublicationId] = newPublication;
+        profiles[msg.sender].publications.push(newPublication);
         profiles[msg.sender].publicationIds.push(newPublicationId);
         IPublication(publicationContractAddress).mint(
             msg.sender,
@@ -233,12 +239,30 @@ contract DePhilContract is Ownable {
     function upvotePublication(uint256 publicationId) external {
         publications[publicationId].upVotes += 1;
         userPoints[publications[publicationId].author] += 1;
+
+        address publicationOwner = publications[publicationId].author;
+        for (uint256 index = 0; index < profiles[publicationOwner].publications.length; index++) {
+            if (profiles[publicationOwner].publications[index].id == publications[publicationId].id) {
+                profiles[publicationOwner].publications[index].upVotes += 1;
+                break;
+            }
+        }
+
         emit PublicationVoted(publicationId, msg.sender, "upvote");
     }
 
     function downvotePublication(uint256 publicationId) external {
         publications[publicationId].downVotes += 1;
         userPoints[publications[publicationId].author] += 1;
+
+        address publicationOwner = publications[publicationId].author;
+        for (uint256 index = 0; index < profiles[publicationOwner].publications.length; index++) {
+            if (profiles[publicationOwner].publications[index].id == publications[publicationId].id) {
+                profiles[publicationOwner].publications[index].downVotes += 1;
+                break;
+            }
+        }
+
         emit PublicationVoted(publicationId, msg.sender, "downvote");
     }
 
@@ -251,6 +275,9 @@ contract DePhilContract is Ownable {
             content: content,
             createdAt: block.timestamp
         });
+        publications[publicationId].commentsCount++;
+        
+        emit PublicationCommented(publicationId, msg.sender, content);
     }
 
     function getComments(
@@ -287,45 +314,9 @@ contract DePhilContract is Ownable {
         public
         view
         returns (
-            string memory,
-            string memory,
-            address,
-            address[] memory,
-            address[] memory,
-            uint256[] memory,
-            uint256
+            Profile memory
         )
     {
-        Profile storage profile = profiles[_address];
-
-        address[] memory following = new address[](profile.following.length);
-        address[] memory followers = new address[](profile.followers.length);
-
-        for (uint256 i = 0; i < profile.following.length; i++) {
-            following[i] = profile.following[i];
-        }
-
-        for (uint256 i = 0; i < profile.followers.length; i++) {
-            followers[i] = profile.followers[i];
-        }
-
-        uint256[] memory publicationIds = new uint256[](
-            profile.publicationIds.length
-        );
-        for (uint256 i = 0; i < profile.publicationIds.length; i++) {
-            publicationIds[i] = profile.publicationIds[i];
-        }
-
-        uint256 points = userPoints[_address];
-
-        return (
-            profile.bio,
-            profile.username,
-            profile.owner,
-            following,
-            followers,
-            publicationIds,
-            points
-        );
+        return profiles[_address];
     }
 }
