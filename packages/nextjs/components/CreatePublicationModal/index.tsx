@@ -25,45 +25,45 @@ export default function CreatePublicationModal({ isOpen, onClose }: { isOpen: bo
   const [cost, setCost] = useState(0);
   const [summary, setSummary] = useState("");
   const [tags, setTags] = useState("");
-  const [file, setFile] = useState("");
+  const [, setFile] = useState("");
   const [quantity, setQuantity] = useState(1);
 
   const parseTags = (tags: string): string[] => {
     return tags.split(",").map(tag => tag.trim());
   };
 
-  const uploadFileToIPFS = async (file: string | Blob) => {
-    const formData = new FormData();
-    formData.append("file", file);
+  // const uploadFileToIPFS = async (file: string | Blob) => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
 
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+  //   const response = await fetch("/api/upload", {
+  //     method: "POST",
+  //     body: formData,
+  //   });
 
-    if (!response.ok) {
-      throw new Error("File upload failed");
-    }
+  //   if (!response.ok) {
+  //     throw new Error("File upload failed");
+  //   }
 
-    const data = await response.json();
-    return data.uri;
-  };
+  //   const data = await response.json();
+  //   return data.uri;
+  // };
 
-  const handleCreatePublication = async () => {
-    try {
-      // const uri = await uploadFileToIPFS(file);
-      await writeContract({
-        chainId: targetNetwork.id,
-        abi: deployedContractData?.abi ?? [],
-        address: deployedContractData?.address ?? "0x0",
-        functionName: "createPublication",
-        args: ["uri", title, summary, BigInt(cost), parseTags(tags), BigInt(quantity)],
-      });
-      onClose();
-    } catch (error) {
-      console.error("Error creating publication:", error);
-    }
-  };
+  // const handleCreatePublication = async () => {
+  //   try {
+  //     // const uri = await uploadFileToIPFS(file);
+  //     await writeContract({
+  //       chainId: targetNetwork.id,
+  //       abi: deployedContractData?.abi ?? [],
+  //       address: deployedContractData?.address ?? "0x0",
+  //       functionName: "createPublication",
+  //       args: ["uri", title, summary, BigInt(cost), parseTags(tags), BigInt(quantity)],
+  //     });
+  //     onClose();
+  //   } catch (error) {
+  //     console.error("Error creating publication:", error);
+  //   }
+  // };
 
   return (
     <>
